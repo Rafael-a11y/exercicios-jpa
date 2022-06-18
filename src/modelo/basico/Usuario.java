@@ -1,13 +1,16 @@
 package modelo.basico;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
+@Entity // Para que seja uma tabela
 public class Usuario
 {
 
-	@Id
+	@Id // Para que seja uma chave primária
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Para que o atributo seja auto_increment
 	private Long id;
 	
 	private String nome;
