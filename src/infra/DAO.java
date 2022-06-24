@@ -32,7 +32,7 @@ public class DAO <E>
 		this(null);
 	}
 	
-	public DAO(Class <E> classe)
+	public DAO(Class <E> classe) // Passando a classe como parâmetro. 
 	{
 		this.classe = classe;
 		em = emf.createEntityManager();
@@ -50,15 +50,15 @@ public class DAO <E>
 		return this;
 	}
 	
-	public DAO<E> incluir(E entidade)
+	public DAO<E> incluirEntidade(E entidade)
 	{
 		em.persist(entidade);
 		return this;
 	}
 	
-	public DAO<E> incluirTransacaoAtomica(E entidade)
+	public DAO<E> incluirDeFormaAtomica(E entidade)
 	{
-		this.abrirTransacao().incluir(entidade).fecharTransacao();
+		this.abrirTransacao().incluirEntidade(entidade).fecharTransacao();
 		return this;
 	}
 	
