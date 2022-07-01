@@ -38,19 +38,19 @@ public class DAO <E>
 		em = emf.createEntityManager();
 	}
 	
-	public DAO<E> abrirTransacao()
+	public DAO<E> comecarTransacao()
 	{
 		em.getTransaction().begin();
 		return this;
 	}
 	
-	public DAO<E> fecharTransacao()
+	public DAO<E> commitarTransacao()
 	{
 		em.getTransaction().commit();
 		return this;
 	}
 	
-	public DAO<E> incluirEntidade(E entidade)
+	public DAO<E> persistirEntidade(E entidade)
 	{
 		em.persist(entidade);
 		return this;
@@ -58,7 +58,7 @@ public class DAO <E>
 	
 	public DAO<E> incluirDeFormaAtomica(E entidade)
 	{
-		this.abrirTransacao().incluirEntidade(entidade).fecharTransacao();
+		this.comecarTransacao().persistirEntidade(entidade).commitarTransacao();
 		return this;
 	}
 	
