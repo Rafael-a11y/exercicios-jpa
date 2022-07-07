@@ -11,7 +11,7 @@ public class DAO <E>
 {
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Class<E> classe;
+	private Class<E> classe; //Recebe literalmente uma classe de parâmetro
 	
 	static /* Serve para iniciar emf apenas uma única vez, já que este servirá para várias conexões
 			em. Também serve para criar um bloco, pois objetos e métodos são exeutados apenas em
@@ -83,5 +83,10 @@ public class DAO <E>
 	public void fecharEntityManager()
 	{
 		em.close();
+	}
+	
+	public E obterPorId(Object id)
+	{
+		return em.find(classe, id);
 	}
 }
