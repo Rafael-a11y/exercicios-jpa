@@ -18,7 +18,7 @@ public class Cliente
 	private Long id;
 	
 	private String nome;
-	@OneToOne(cascade = CascadeType.PERSIST) //Serve para fazer uma persistência em cascata, assim o objeto associado também é persistido
+	@OneToOne(cascade = CascadeType.PERSIST) //Serve para fazer uma persistência em cascata, assim o objeto associado também é persistido em um único comando persist()
 	@JoinColumn (name = "assento_id", unique = true) /*@JoinColumn serve para atributos que representam a junção entre duas colunas, como uma coluna de chave estrangeira por exemplo.*/
 	private Assento assento;
 	public Cliente() {

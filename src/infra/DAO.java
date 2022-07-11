@@ -32,7 +32,9 @@ public class DAO <E>
 		this(null);
 	}
 	
-	public DAO(Class <E> classe) // Passando a classe como parâmetro. 
+	/*Passando uma classe E como parâmetro que sera usada em obterPorId() que usa Class.getName() para achar o registro equivalente no banco de dados. Acontece que o método
+		find() que retorna o registro pesquisado, precisa do Class.name, cujo valor é guardado dentro do atributo classe*/
+	public DAO(Class <E> classe)  
 	{
 		this.classe = classe;
 		em = emf.createEntityManager();
@@ -50,7 +52,7 @@ public class DAO <E>
 		return this;
 	}
 	
-	public DAO<E> persistirEntidade(E entidade)
+	public DAO<E> persistirEntidade(E entidade) 
 	{
 		em.persist(entidade);
 		return this;
@@ -85,6 +87,9 @@ public class DAO <E>
 		em.close();
 	}
 	
+	/*Aqui está um motivo de usar Generics, com este método que usa um id, me permite usar este método para obter qualquer objeto de qualquer tipo, e por isso o motivo de 
+	 * fornecer uma classe no construtor, para poder referenciar o tipo genérico E como parâmetro e assim pesquisar o objeto desejado a partir do método Class.getName() 
+	 * que retorna a classe passada no construtor*/
 	public E obterPorId(Object id)
 	{
 		return em.find(classe, id);

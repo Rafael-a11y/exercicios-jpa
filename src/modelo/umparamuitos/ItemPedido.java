@@ -2,6 +2,7 @@ package modelo.umparamuitos;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,9 +16,10 @@ public class ItemPedido
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) /*Configura a chave primária como uma chave artificial que será gerada por auto incremento no banco de dados*/
 	private Long id;
-	@ManyToOne
+	//Por padrão, quando uma classe possui uma relação muitos para um ou um para um, o atributo busca é ansioso (fetch = FetchType.EAGER)
+	@ManyToOne (fetch = FetchType.EAGER)
 	private Pedido pedido;
-	@ManyToOne
+	@ManyToOne (fetch = FetchType.EAGER)
 	private Produto produto;
 	@Column(nullable = false)
 	private int quantidade;

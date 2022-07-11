@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,7 +20,8 @@ public class Pedido
 	private Long id;
 	@Column(nullable = false)
 	private Date data;
-	@OneToMany(mappedBy = "pedido") /*Estabelecendo o lado bidirecional da relação entre pedido e ItemPedido*/
+	//Por padrão, quando uma classe possui uma relação um para muitos ou muitos para muitos, o atributo busca é preguiçoso (fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY) /*Estabelecendo o lado bidirecional da relação entre pedido e ItemPedido*/
 	private List<ItemPedido> itens = new ArrayList<>();
 	
 	public Pedido()

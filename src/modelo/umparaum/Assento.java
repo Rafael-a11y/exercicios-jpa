@@ -15,12 +15,20 @@ public class Assento
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(unique = true) // Percebi que um cliente poderia comprar mais de um assento, cada assento com um Id diferente, mas isso não impede de os dois assentos terem o mesmo
-	private String nome;   //nome, exemplo: Maria compra os assentos 02 e 03 (lembrando que Chaves auto incrementadas não aparecem para o usuário), ambos assentos com nome F04.
+	/* Percebi que um cliente poderia comprar mais de um assento, cada assento com um Id diferente, mas isso não impede de os dois assentos terem o mesmo
+		nome, exemplo: Maria compra os assentos 02 e 03 (lembrando que Chaves auto incrementadas não aparecem para o usuário), ambos assentos com nome F04,
+		por isso a importância de definir o atributo como único, impedindo que assentos tenham o mesmo nome, impedindo que em nosso aplicativo, um cliente compre duas vezes
+		o mesmo assento.*/
+	@Column(unique = true)
+	private String nome;
 	
-	@OneToOne(mappedBy = "assento") //Basicamente estou dizendo ao Hibernate que este atributo é nada mais nada menos que o lado bidirecional da relação, pois a relação está
-	private Cliente cliente;		//mapeada na classe Cliente, no  atributo assento.
-
+	/*Basicamente estou dizendo ao Hibernate que este atributo é nada mais nada menos que o lado bidirecional da relação, pois a relação está
+		mapeada na classe Cliente, no  atributo assento. É importante fazer isso para que nas duas tabelas não seja criado uma coluna contendo 
+		o id um do outro (cliente_id em assentos e assento_id em cliente), pois isso fere os princípios de banco de dados relacionais, não é
+		uma boa prática*/
+	@OneToOne(mappedBy = "assento") 
+	private Cliente cliente;
+	
 	public Cliente getCliente() {
 		return cliente;
 	}
