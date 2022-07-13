@@ -23,7 +23,8 @@ public class DAO <E>
 		}
 		catch(Exception e)
 		{
-			
+			System.out.println("EntityManagerFactory não foi criado, emf nulo.");
+			e.getMessage();
 		}
 	}
 	
@@ -80,6 +81,25 @@ public class DAO <E>
 		query.setMaxResults(quantidade);
 		query.setFirstResult(deslocamento);
 		return query.getResultList();
+	}
+	
+	public List<E> consultar(String nomeConsulta, Object... params)
+	{
+		/*Os parâmetros do método createNamedQuery são: o nome da consulta declarada no consultas.xml que foi mapeado em 
+		 * persistence.xml e a classe em que se deseja manipular a consulta*/
+		TypedQuery<E> query = em.createNamedQuery(nomeConsulta, classe);
+		for(int i = 0; i < params.length; i = i + 2)
+		{
+			//Setando os parâmetros...
+			query.setParameter(params[i].toString(), params[i + 1]);
+		}
+		return query.getResultList();
+	}
+	
+	public E consultarUm(String nomeConsulta, Object... params)
+	{
+		List<E> lista = consultar(nomeConsulta, params);
+		return lista.isEmpty() ? null : lista.get(0);
 	}
 	
 	public void fecharEntityManager()
